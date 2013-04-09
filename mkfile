@@ -7,13 +7,16 @@ files=instructionset.txt timing.txt
 <| echo ''''src='''' ^ `{ls -1 Source/*.cs}
 
 
-build:VQ: Build/ProgCom.dll
+build:VQ: Build/ Build/Plugins/ProgCom.dll $files
+	tar cv $dirs $files | tar xv -C Build/
 
-Build/ProgCom.dll:Q: Build/ $src
+Build/Plugins/ProgCom.dll:Q: Build/Plugins/ $src
 	mcs -out:$target -r:Assembly-CSharp.dll -r:UnityEngine.dll -L ../KSP_linux/KSP_Data/Managed/ -target:library $src
 
-Build/:Q:
-	mkdir Build/
+Build/ Build/Plugins/:Q:
+	mkdir $target
+
+Build/Plugins/:Q: Build/
 
 install:VQ: build
-	tar cv $dirs $files | tar xv -C ../KSP_linux/
+	tar cv -C Build/ . | tar xv -C ../KSP_linux/
