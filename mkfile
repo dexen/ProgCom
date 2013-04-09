@@ -1,6 +1,6 @@
 MKSHELL=rc
 
-dirs=Parts/ PluginData/ Plugins/ Source/
+dirs=Parts/ PluginData/ Source/
 files=instructionset.txt timing.txt
 
 
@@ -14,7 +14,7 @@ Build/Plugins/ProgCom.dll:Q: Build/Plugins/ $src
 	mcs -out:$target -r:Assembly-CSharp.dll -r:UnityEngine.dll -L ../KSP_linux/KSP_Data/Managed/ -target:library $src
 
 Build/ Build/Plugins/:Q:
-	mkdir $target
+	mkdir -p $target
 
 Build/Plugins/:Q: Build/
 
